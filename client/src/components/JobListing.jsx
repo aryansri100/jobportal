@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import { assets, JobCategories, JobLocations } from '../assets/assets'
 import JobCard from './JobCard'
+import axios from 'axios';
 
 const JobListing = () => {
     const {isSearched,searchFilter,setSearchFilter,jobs} = useContext(AppContext)

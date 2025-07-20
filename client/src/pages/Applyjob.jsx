@@ -10,6 +10,8 @@ import JobCard from '../components/JobCard'
 import Footer from '../components/Footer'
 import { toast } from 'react-toastify'
 import { useAuth } from '@clerk/clerk-react'
+import axios from 'axios';
+
 const Applyjob = () => {
     const {id}=useParams()
     const {getToken}=useAuth()
@@ -19,16 +21,18 @@ const Applyjob = () => {
     const {jobs,backendUrl,userData,userApplications,fetchUserApplications}=useContext(AppContext)
     const fetchJob=async() =>{
         try {
-            const data=await axios.get(backendUrl+`/api/jobs/${id}`)
-       if(data.success){
-        setJobData(data.job)
+          const res = await axios.get(backendUrl + `/api/jobs/${id}`);
+const data = res.data;
 
-       }else{
-        toast.error(data.message)
-       }
+if (data.success) {
+    setJobData(data.job);
+} else {
+    toast.error(data.message);
+}
+
             
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error.response?.data?.message || error.message)
         }
        
     }
